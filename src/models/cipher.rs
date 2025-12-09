@@ -272,6 +272,9 @@ pub struct CipherRequestData {
     pub reprompt: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_known_revision_date: Option<String>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub collection_ids: Option<Vec<String>>,
 }
 
 // Represents the full request payload for creating a cipher.
