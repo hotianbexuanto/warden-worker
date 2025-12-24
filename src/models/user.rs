@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 pub struct User {
     pub id: String,
     pub name: Option<String>,
+    pub avatar_color: Option<String>,
     pub email: String,
     #[serde(with = "bool_from_int")]
     pub email_verified: bool,

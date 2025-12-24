@@ -69,6 +69,7 @@ pub async fn get_sync_data(
     let profile = Profile {
         id: user.id,
         name: user.name,
+        avatar_color: user.avatar_color,
         email: user.email,
         master_password_hint: user.master_password_hint,
         security_stamp: user.security_stamp,
@@ -82,14 +83,16 @@ pub async fn get_sync_data(
         creation_date: time,
         key: user.key,
         private_key: user.private_key,
-        culture: "en-US".to_string(),
     };
 
     let response = SyncResponse {
         profile,
         folders,
+        collections: vec![],
+        policies: vec![],
         ciphers,
         domains: serde_json::Value::Null, // Ignored for basic implementation
+        sends: vec![],
         object: "sync".to_string(),
     };
 

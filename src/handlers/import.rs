@@ -87,6 +87,8 @@ pub async fn import_data(
             edit: true,
             view_password: true,
             collection_ids: None,
+            attachments: None,
+            key: None,
         };
 
         let data = serde_json::to_string(&cipher.data).map_err(|_| AppError::Internal)?;

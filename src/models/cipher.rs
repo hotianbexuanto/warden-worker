@@ -102,6 +102,10 @@ pub struct Cipher {
     pub view_password: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub collection_ids: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub attachments: Option<Vec<serde_json::Value>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub key: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -134,11 +138,13 @@ impl Into<Cipher> for CipherDBModel {
             deleted_at: self.deleted_at,
             created_at: self.created_at,
             updated_at: self.updated_at,
-            object: "default_object".to_string(),
+            object: default_object(),
             organization_use_totp: false,
             edit: true,
             view_password: true,
             collection_ids: None,
+            attachments: None,
+            key: None,
         }
     }
 }
@@ -161,11 +167,22 @@ impl Serialize for Cipher {
         response_map.insert("favorite".to_string(), json!(self.favorite));
         response_map.insert("edit".to_string(), json!(self.edit));
         response_map.insert("viewPassword".to_string(), json!(self.view_password));
+        // Permissions object used by clients since v2025.6.0
+        // Required for browser extension to display delete/restore buttons
+        response_map.insert(
+            "permissions".to_string(),
+            json!({
+                "delete": self.edit,   // if edit is true, allow delete
+                "restore": self.edit,  // if edit is true, allow restore
+            }),
+        );
         response_map.insert(
             "organizationUseTotp".to_string(),
             json!(self.organization_use_totp),
         );
         response_map.insert("collectionIds".to_string(), json!(self.collection_ids));
+        response_map.insert("attachments".to_string(), json!(self.attachments));
+        response_map.insert("key".to_string(), json!(self.key));
         response_map.insert("revisionDate".to_string(), json!(self.updated_at));
         response_map.insert("creationDate".to_string(), json!(self.created_at));
         response_map.insert("deletedDate".to_string(), json!(self.deleted_at));

@@ -5,3 +5,6 @@ pub mod identity;
 pub mod sync;
 pub mod folders;
 pub mod import;
+pub mod devices;
+pub mod emergency_access;
+pub mod webauth;
