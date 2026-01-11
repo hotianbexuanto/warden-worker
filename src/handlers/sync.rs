@@ -71,6 +71,7 @@ pub async fn get_sync_data(
         name: user.name,
         avatar_color: user.avatar_color,
         email: user.email,
+        culture: "en-US".to_string(),
         master_password_hint: user.master_password_hint,
         security_stamp: user.security_stamp,
         object: "profile".to_string(),

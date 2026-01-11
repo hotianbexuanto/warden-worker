@@ -11,6 +11,8 @@ pub struct Profile {
     pub avatar_color: Option<String>,
     pub email: String,
     pub id: String,
+    #[serde(rename = "Culture")]
+    pub culture: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub master_password_hint: Option<String>,
     pub security_stamp: String,
